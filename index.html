@@ -2,122 +2,79 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Feliz Cumpleaños</title>
+  <title>Feliz Cumpleaños Majo</title>
   <style>
     body {
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;   /* Centra horizontalmente */
-  justify-content: center; /* Centra verticalmente */
-  height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-}
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;      /* Centra horizontalmente */
+      justify-content: center;  /* Centra verticalmente */
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
 
-h1 {
-  font-size: 4em;        /* Agranda el texto */
-  color: #e63946;
-  margin: 20px 0;
-  text-align: center;    /* Centra el texto */
-  animation: aparecer 2s ease-in-out forwards;
-  z-index: 2;
-}
+    h1 {
+      font-size: 4.5em;         /* Texto más grande */
+      color: #e63946;
+      margin: 20px 0;
+      text-align: center;       /* Centra el texto */
+      animation: aparecer 2s ease-in-out forwards;
+      z-index: 2;
+    }
 
-.imagen {
-  width: 500px;          /* Agranda la imagen */
-  height: auto;
-  opacity: 0;
-  animation: dibujar 4s ease-in-out forwards;
-  z-index: 2;
-  display: block;
-  margin: 0 auto;        /* Centra la imagen */
-}
+    .imagen {
+      width: 500px;             /* Imagen más grande */
+      height: auto;
+      opacity: 0;
+      animation: dibujar 4s ease-in-out forwards;
+      z-index: 2;
+      display: block;
+      margin: 0 auto;           /* Centra la imagen */
+    }
 
+    /* Animaciones */
     @keyframes aparecer {
-      from { opacity: 0; transform: translateY(-20px); }
+      from { opacity: 0; transform: translateY(-50px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes dibujar {
-      0% { opacity: 0; filter: blur(10px); }
-      50% { opacity: 0.5; filter: blur(5px); }
-      100% { opacity: 1; filter: blur(0); }
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
+    /* Confeti */
+    .confeti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      animation: caer 5s linear infinite;
+    }
+
+    @keyframes caer {
+      from { transform: translateY(-100vh); }
+      to { transform: translateY(100vh); }
     }
   </style>
 </head>
 <body>
-  <h1>!Feliz Cumpleaños Majo¡</h1>
-  <img src="Spiderman.png" alt="Spider-Man Pixel Art" class="imagen">
-  <canvas id="confetti"></canvas>
+  <h1>¡Feliz Cumpleaños Majo!</h1>
+  <img src="spiderman.png" alt="Spider-Man Pixel Art" class="imagen">
 
+  <!-- Confeti generado -->
   <script>
-    const canvas = document.getElementById('confetti');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const confettis = [];
-    const colors = ['#e63946', '#f1faee', '#a8dadc', '#457b9d', '#ffbe0b'];
-
-    function Confetti() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * -canvas.height;
-      this.size = Math.random() * 8 + 4;
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.speed = Math.random() * 3 + 2;
-      this.angle = Math.random() * 360;
+    for (let i = 0; i < 100; i++) {
+      let confeti = document.createElement("div");
+      confeti.className = "confeti";
+      confeti.style.left = Math.random() * 100 + "vw";
+      confeti.style.backgroundColor = ["red","blue","green","yellow","purple"][Math.floor(Math.random()*5)];
+      confeti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      document.body.appendChild(confeti);
     }
-
-    Confetti.prototype.update = function() {
-      this.y += this.speed;
-      this.angle += 2;
-      if (this.y > canvas.height) {
-        this.y = Math.random() * -canvas.height;
-        this.x = Math.random() * canvas.width;
-      }
-    };
-
-    Confetti.prototype.draw = function() {
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-    };
-
-    function init() {
-      for (let i = 0; i < 150; i++) {
-        confettis.push(new Confetti());
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      confettis.forEach(c => {
-        c.update();
-        c.draw();
-      });
-      requestAnimationFrame(animate);
-    }
-
-    init();
-    animate();
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
   </script>
 </body>
 </html>
